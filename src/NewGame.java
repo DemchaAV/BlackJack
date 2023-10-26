@@ -241,7 +241,7 @@ public class NewGame {
     }
 
     public void getCard(int player) {
-        if (player < 0)
+        if (player > 0)
             players.get(player).getCard(deck.getCard());
         else players.get(0).getCard(deck.getCard());
 
