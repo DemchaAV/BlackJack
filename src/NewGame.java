@@ -4,7 +4,6 @@ import java.util.Scanner;
 public class NewGame {
     private int amountPlayers = 0;
     private ArrayList<Player> players = new ArrayList<>();
-    private ArrayList<Integer> firstBet;
     private ArrayList<Integer> Bet;
     String separator = "--------------------------  ";
     Deck deck = new Deck();
@@ -249,7 +248,7 @@ public class NewGame {
 
 
     public void removePlayer(int player) {
-        if (rules.isOver(21,player)) ;
+        if (rules.isOver(21, player)) ;
     }
 
     public void firstDropCard() {
@@ -261,6 +260,27 @@ public class NewGame {
 
             }
             players.get(0).getCard(deck.getCard());
+        }
+    }
+
+    public void doBets() {
+        System.out.println("Type your bet 1 bet equals 25");
+        for (int i = 1; i < players.size(); i++) {
+            if (players.get(i).getBalance() > 25) {
+                Scanner scanner = new Scanner(System.in);
+                System.out.println(players.get(i).getName() + " your bet: ");
+                int betCof = scanner.nextInt();
+
+                try {
+                    players.get(i).setBet(betCof);
+                } catch (outOfMoney e) {
+                    System.out.println("Available bet is: 1 -"+players.get(i).getBalance()/25);
+                    i = i-1;
+                }
+
+            } else System.out.println("Player " + players.get(i).getName() +
+                    " don`t have enough money " +
+                    "next player");
         }
     }
 
@@ -304,7 +324,7 @@ public class NewGame {
             }
             if (players.size() - 1 == i && key.equals("-")) {
 
-                while (!rules.isOver(17,0)){
+                while (!rules.isOver(17, 0)) {
                     getCard(0);
                 }
 

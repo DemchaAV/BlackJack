@@ -22,8 +22,8 @@ class Run {
                     newGame = new NewGame(players);
                     newGame.getPlayer(1).setName("Artem");
                     newGame.getPlayer(2).setName("Ivan");
-                    newGame.getPlayer(1).setBalance(466);
-                    newGame.getPlayer(2).setBalance(456);
+                    newGame.getPlayer(1).setBalance(42);
+                    newGame.getPlayer(2).setBalance(45);
                     gameInProcess = true;
                     game = false;
                 }
@@ -58,6 +58,7 @@ class Run {
                     StartGame.gameOver();
                 }
             }
+            newGame.doBets();
             gameInProcess = newGame.next(2);
             gameInProcess = false;
 

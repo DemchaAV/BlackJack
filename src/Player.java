@@ -3,6 +3,11 @@ import java.util.ArrayList;
 public class Player  implements Action {
     private String name;
     private int balance;
+
+    public int getBalance() {
+        return balance;
+    }
+
     private ArrayList<Integer> pool= new ArrayList<>();
     private int sumPoint = 0;
     int sumBet;
