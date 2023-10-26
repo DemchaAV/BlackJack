@@ -287,7 +287,7 @@ public class NewGame {
     public boolean next(int round) {
         String key = "start";
         System.out.println("Type \"-\" to skip (enouph yor step, \"+\" get one more card");
-        for (int i = 1; i < players.size(); i++) {
+        OUTER: for (int i = 1; i < players.size(); i++) {
             Scanner in = new Scanner(System.in);
             if (key.equals("q")) {
                 break;
@@ -320,6 +320,7 @@ public class NewGame {
                     players.get(i).clearPool();
                     print(1);
                     System.out.println();
+                    continue OUTER;
 
                 }
             }
@@ -329,8 +330,10 @@ public class NewGame {
         }
         while (!rules.isOver(17, 0)) {
             getCard(0);
-           if( rules.isOver(21, 0))
-            players.get(0).clearPool();
+            if (rules.isOver(21, 0)) {
+                players.get(0).clearPool();
+                break;
+            }
         }
         print(2);
         for (int i = 0; i < players.size(); i++) {
@@ -354,12 +357,12 @@ public class NewGame {
         int temp = 0;
         for (int i = 0; i < bet.size(); i++) {
             if (bet.get(i) > temp) {
-                temp=bet.get(i);
+                temp = bet.get(i);
                 player = i;
             }
         }
         System.out.println();
-        System.out.println("Winner is : " +players.get(player));
+        System.out.println("Winner is : " + players.get(player));
     }
 
 
