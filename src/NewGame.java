@@ -4,7 +4,7 @@ import java.util.Scanner;
 public class NewGame {
     private int amountPlayers = 0;
     private ArrayList<Player> players = new ArrayList<>();
-    private ArrayList<Integer> Bet;
+    private ArrayList<Integer> bet = new ArrayList<>();
     String separator = "--------------------------  ";
     Deck deck = new Deck();
     Rules rules;
@@ -232,7 +232,7 @@ public class NewGame {
                         ;
             }
             default -> {
-                return "Incorect card";
+                return "#####################";
             }
         }
 
@@ -274,8 +274,8 @@ public class NewGame {
                 try {
                     players.get(i).setBet(betCof);
                 } catch (outOfMoney e) {
-                    System.out.println("Available bet is: 1 -"+players.get(i).getBalance()/25);
-                    i = i-1;
+                    System.out.println("Available bet is: 1 -" + players.get(i).getBalance() / 25);
+                    i = i - 1;
                 }
 
             } else System.out.println("Player " + players.get(i).getName() +
@@ -303,7 +303,7 @@ public class NewGame {
                         }
                         case "+" -> {
                             getCard(i);
-                            print(2);
+                            print(1);
                             System.out.println();
 
                         }
@@ -318,21 +318,24 @@ public class NewGame {
                     System.out.println("Player: " + players.get(i).getName());
                     System.out.println("Lost game");
                     players.get(i).clearPool();
-                    print(2);
+                    print(1);
+                    System.out.println();
 
                 }
             }
             if (players.size() - 1 == i && key.equals("-")) {
-
-                while (!rules.isOver(17, 0)) {
-                    getCard(0);
-                }
-
-                return false;
-
+                break;
             }
         }
+        while (!rules.isOver(17, 0)) {
+            getCard(0);
+           if( rules.isOver(21, 0))
+            players.get(0).clearPool();
+        }
         print(2);
+        for (int i = 0; i < players.size(); i++) {
+            bet.add(rules.scoring(i));
+        }
         return true;
     }
 
@@ -343,6 +346,20 @@ public class NewGame {
         printInfoPlayers();
         printInfoCardPool();
         printInfoDealer(round);
+    }
+
+    public void wonGame() {
+        System.out.println(bet);
+        int player = 0;
+        int temp = 0;
+        for (int i = 0; i < bet.size(); i++) {
+            if (bet.get(i) > temp) {
+                temp=bet.get(i);
+                player = i;
+            }
+        }
+        System.out.println();
+        System.out.println("Winner is : " +players.get(player));
     }
 
 

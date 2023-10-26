@@ -60,6 +60,7 @@ class Run {
             }
             newGame.doBets();
             gameInProcess = newGame.next(2);
+            newGame.wonGame();
             gameInProcess = false;
 
 

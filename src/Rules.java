@@ -72,7 +72,7 @@ public class Rules {
             if (score >= over) return true;
             else return false;
         } else {
-            if (score >= over) return true;
+            if (score > over) return true;
             else return false;
         }
     }
