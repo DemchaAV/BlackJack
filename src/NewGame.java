@@ -249,7 +249,7 @@ public class NewGame {
 
 
     public void removePlayer(int player) {
-        if (rules.isOver(player)) ;
+        if (rules.isOver(21,player)) ;
     }
 
     public void firstDropCard() {
@@ -264,7 +264,7 @@ public class NewGame {
         }
     }
 
-    public boolean next() {
+    public boolean next(int round) {
         String key = "start";
         System.out.println("Type \"-\" to skip (enouph yor step, \"+\" get one more card");
         for (int i = 1; i < players.size(); i++) {
@@ -274,7 +274,7 @@ public class NewGame {
             }
             boolean step = true;
             while (step) {
-                if (!rules.isOver(i)) {
+                if (!rules.isOver(21, i)) {
                     System.out.println("Player " + players.get(i).getName());
                     key = in.next().toLowerCase();
                     switch (key) {
@@ -283,7 +283,7 @@ public class NewGame {
                         }
                         case "+" -> {
                             getCard(i);
-                            print();
+                            print(2);
                             System.out.println();
 
                         }
@@ -298,27 +298,31 @@ public class NewGame {
                     System.out.println("Player: " + players.get(i).getName());
                     System.out.println("Lost game");
                     players.get(i).clearPool();
+                    print(2);
 
                 }
             }
             if (players.size() - 1 == i && key.equals("-")) {
+
+                while (!rules.isOver(17,0)){
+                    getCard(0);
+                }
+
                 return false;
 
             }
         }
-        while (rules.isOver(0)){
-            getCard(0);
-        }
+        print(2);
         return true;
     }
 
-    public void print() {
+    public void print(int round) {
         System.out.println();
         System.out.println();
         System.out.println("Game has started!");
         printInfoPlayers();
         printInfoCardPool();
-        printInfoDealer(1);
+        printInfoDealer(round);
     }
 
 

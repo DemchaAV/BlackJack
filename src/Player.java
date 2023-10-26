@@ -43,7 +43,7 @@ public class Player  implements Action {
         this.name = name;
     }
     public void clearPool(){
-        for (int i = 0; i < pool.size()-1; i++) {
+        for (int i = 0; i < pool.size(); i++) {
             pool.set(i,0);
 
         }

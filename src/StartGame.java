@@ -58,7 +58,8 @@ class Run {
                     StartGame.gameOver();
                 }
             }
-            gameInProcess = newGame.next();
+            gameInProcess = newGame.next(2);
+            gameInProcess = false;
 
 
         }

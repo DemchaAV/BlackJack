@@ -1,27 +1,28 @@
 public class Rules {
-    NewGame game ;
+    NewGame game;
 
     public Rules(NewGame game) {
         this.game = game;
     }
 
 
-
     public int scoring(int i) {
         int score = 0;
         for (int card :
                 game.getPlayer(i).getPool()) {
-            score+=getScore(card);
+            score += getScore(card);
         }
 
         return score;
 
     }
-public boolean isBlackJack(int player){
-    System.out.println(scoring(player));
-    if(scoring(player)==21 && game.getPlayers().get(player).getPool().size()==2) return true;
+
+    public boolean isBlackJack(int player) {
+        System.out.println(scoring(player));
+        if (scoring(player) == 21 && game.getPlayers().get(player).getPool().size() == 2) return true;
         else return false;
-}
+    }
+
     private int getScore(int card) {
 
         if (card <= 13) {
@@ -64,10 +65,16 @@ public boolean isBlackJack(int player){
         }
 
     }
-    boolean isOver(int player){
+
+    boolean isOver(int over, int player) {
         int score = scoring(player);
-        if (score>21) return true;
-        else return false;
+        if (over == 17) {
+            if (score >= over) return true;
+            else return false;
+        } else {
+            if (score >= over) return true;
+            else return false;
+        }
     }
 
 
