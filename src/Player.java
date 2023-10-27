@@ -53,6 +53,9 @@ public class Player  implements Action {
 
         }
     }
+    public void reset(){
+        pool=new ArrayList<>();
+    }
 
     public String getName() {
         return name;

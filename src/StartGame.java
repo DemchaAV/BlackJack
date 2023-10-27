@@ -1,3 +1,4 @@
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 class Run {
@@ -6,32 +7,26 @@ class Run {
         String key;
         boolean gameInProcess = false;
         NewGame newGame = new NewGame();
-
         System.out.println("WELCOME TO THE GAME");
         while (game) {
-
             System.out.println("Type \"s\" to start the  game,  \"q\" to quit");
-//            key = in.nextLine().toLowerCase();
-            key = "s";
+            Scanner in = new Scanner(System.in);
+            key = in.nextLine().toLowerCase();
             switch (key) {
                 case "s" -> {
                     System.out.println("Type the number of Players:");
-//                    int players = in.nextInt();
-                    int players = 3;
-//                    newGame = registration(players);
-                    newGame = new NewGame(players);
-                    newGame.getPlayer(1).setName("Artem");
-                    newGame.getPlayer(2).setName("Ivan");
-                    newGame.getPlayer(1).setBalance(42);
-                    newGame.getPlayer(2).setBalance(45);
-                    newGame.getPlayer(3).setName("John");
-                    newGame.getPlayer(3).setBalance(43);
+                    int players = 0;
+                    try {
+                        players = StartGame.numScanner();
+                    } catch (InputMismatchException e) {
+                        System.out.println("Please try again, numbers only! ");
+                        StartGame.numScanner();
+                    }
+                    newGame = StartGame.registration(players);
                     gameInProcess = true;
                     game = false;
                 }
                 case "q" -> game = false;
-
-
             }
 
         }
@@ -45,9 +40,8 @@ class Run {
         }
         System.out.print("Type \"d\" to deal the cards \"q\"  to quit: ");
         while (gameInProcess) {
-//            Scanner scanner = new Scanner(System.in);
-//            key = scanner.nextLine().toLowerCase();
-            key = "d";
+            Scanner scanner = new Scanner(System.in);
+            key = scanner.nextLine().toLowerCase();
             switch (key) {
                 case "d" -> {
                     newGame.firstDropCard();
@@ -65,6 +59,17 @@ class Run {
             gameInProcess = newGame.next(2);
             newGame.wonGame();
             gameInProcess = false;
+            System.out.println("Type \"c\" to continue the game or \"q\" to quit: ");
+            key = scanner.nextLine().toLowerCase();
+            switch (key) {
+                case "c" -> {
+                    gameInProcess = true;
+                    newGame.newRound();
+                    System.out.print("Type \"d\" to deal the cards \"q\"  to quit: ");
+                }
+                case "q" -> gameInProcess = false;
+
+            }
 
 
         }
@@ -80,13 +85,26 @@ public class StartGame {
             System.out.println("Type Name of player № " + i);
             String name = scanner.nextLine();
             newGame.getPlayer(i).setName(name);
-            System.out.println("Type your wallet ");
+            System.out.println("Type your wallet balance ");
             int wallet = scanner.nextInt();
             newGame.getPlayer(i).setBalance(wallet);
         }
         return newGame;
     }
 
+    static int numScanner() {
+        Scanner in = new Scanner(System.in);
+        int number = 0;
+
+        try {
+            number = in.nextInt();
+        } catch (InputMismatchException e) {
+            System.out.println("Please try again, numbers only! ");
+            StartGame.numScanner();
+        }
+        return number;
+
+    }
 
 
     static void inProgress(NewGame newGame, boolean gameInProcess) {

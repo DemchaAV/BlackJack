@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.InputMismatchException;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class NewGame {
@@ -141,7 +143,7 @@ public class NewGame {
             }
             printSpace(separator.length());
             player++;
-            if (player > players.size() - 1 && line >= lines - 1 || player>players.size()) {
+            if (player > players.size() - 1 && line >= lines - 1 || player>players.size()||player==players.size()-1&&players.get(player).getPool().size()>line) {
                 break;
             }
 
@@ -273,6 +275,10 @@ public class NewGame {
                 } catch (outOfMoney e) {
                     System.out.println("Available bet is: 1 -" + players.get(i).getBalance() / 25);
                     i = i - 1;
+                }catch (NoSuchElementException e){
+
+                    System.out.println("Please try again, numbers only");
+                    i = i - 1;
                 }
 
             } else System.out.println("Player " + players.get(i).getName() +
@@ -361,6 +367,12 @@ public class NewGame {
         }
         System.out.println();
         System.out.println("Winner is : " + players.get(player).getName());
+    }
+    public void newRound(){
+        for (int i = 0; i < players.size(); i++) {
+            players.get(i).reset();
+
+        }
     }
 
 
