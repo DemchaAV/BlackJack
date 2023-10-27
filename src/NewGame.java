@@ -375,7 +375,7 @@ beats.add(0);
         }
         System.out.println();
         System.out.println("Winner is : " + players.get(player).getName());
-        if (player != 1) {
+        if (player != 0) {
             players.get(player).topUp(beats.get(player) * 2);
         }
     }
