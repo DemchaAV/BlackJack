@@ -2,7 +2,7 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 class Run {
-    public static void main(String[] args) {
+    public void run (){
         boolean game = true;
         String key;
         boolean gameInProcess = false;
@@ -46,8 +46,6 @@ class Run {
                 case "d" -> {
                     newGame.firstDropCard();
                     StartGame.inProgress(newGame, gameInProcess);
-                    System.out.println(newGame.rules.scoring(1));
-
                 }
                 case "q" -> {
                     gameInProcess = false;

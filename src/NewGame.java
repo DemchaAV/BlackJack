@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.InputMismatchException;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
@@ -7,6 +6,7 @@ public class NewGame {
     private int amountPlayers = 0;
     private ArrayList<Player> players = new ArrayList<>();
     private ArrayList<Integer> amoundScore = new ArrayList<>();
+    private ArrayList<Integer> beats = new ArrayList<>();
     String separator = "--------------------------  ";
     Deck deck = new Deck();
     Rules rules;
@@ -19,7 +19,8 @@ public class NewGame {
     NewGame(int amountPlayers) {
         rules = new Rules(this);
         this.amountPlayers = amountPlayers + 1;
-        this.players = new ArrayList<>(this.amountPlayers);
+        this.players = new ArrayList<>();
+        this.beats = new ArrayList<>();
         Player dealer = new Player();
         dealer.setName("Dealer");
         dealer.setBalance(669999990);
@@ -111,6 +112,7 @@ public class NewGame {
             }
 
         }
+        System.out.println();
     }
 
     public void printInfoCardPool() {
@@ -127,7 +129,7 @@ public class NewGame {
         OUTER:
         while (line < lines || player < players.size() - 1) {
 
-            while (players.get(player).getPool().size() > line) {
+            while (player < players.size() && players.get(player).getPool().size() > line) {
 
                 String tempPrint = showCard(players.get(player).getPool().get(line));
                 System.out.print(tempPrint);
@@ -143,7 +145,7 @@ public class NewGame {
             }
             printSpace(separator.length());
             player++;
-            if (player > players.size() - 1 && line >= lines - 1 || player>players.size()||player==players.size()-1&&players.get(player).getPool().size()>line) {
+            if (player > players.size() - 1 && line >= lines - 1 || player > players.size() || player == players.size() - 1 && players.get(player).getPool().size() > line) {
                 break;
             }
 
@@ -249,7 +251,6 @@ public class NewGame {
     }
 
 
-
     public void firstDropCard() {
 
         for (int j = 0; j < 2; j++) {
@@ -264,26 +265,31 @@ public class NewGame {
 
     public void doBets() {
         System.out.println("Type your bet 1 bet equals 25");
-        for (int i = 1; i < players.size(); i++) {
-            if (players.get(i).getBalance() > 25) {
-                Scanner scanner = new Scanner(System.in);
-                System.out.println(players.get(i).getName() + " your bet: ");
-                int betCof = scanner.nextInt();
+        for (int i = 0; i < players.size(); i++) {
+            if (i == 0) {
+beats.add(0);
+            } else {
+                if (players.get(i).getBalance() > 25) {
+                    Scanner scanner = new Scanner(System.in);
+                    System.out.println(players.get(i).getName() + " your bet: ");
+                    int betCof = scanner.nextInt();
 
-                try {
-                    players.get(i).setBet(betCof);
-                } catch (outOfMoney e) {
-                    System.out.println("Available bet is: 1 -" + players.get(i).getBalance() / 25);
-                    i = i - 1;
-                }catch (NoSuchElementException e){
+                    try {
+                        players.get(i).setBet(betCof);
+                        beats.add( betCof * 25);
+                    } catch (outOfMoney e) {
+                        System.out.println("Available bet is: 1 -" + players.get(i).getBalance() / 25);
+                        i = i - 1;
+                    } catch (NoSuchElementException e) {
 
-                    System.out.println("Please try again, numbers only");
-                    i = i - 1;
-                }
+                        System.out.println("Please try again, numbers only");
+                        i = i - 1;
+                    }
 
-            } else System.out.println("Player " + players.get(i).getName() +
-                    " don`t have enough money " +
-                    "next player");
+                } else System.out.println("Player " + players.get(i).getName() +
+                        " don`t have enough money " +
+                        "next player");
+            }
         }
     }
 
@@ -291,7 +297,8 @@ public class NewGame {
         String key = "start";
         System.out.println();
         System.out.println("Type \"+\" to get one more card, or \"-\" to scip a turn!");
-        OUTER: for (int i = 1; i < players.size(); i++) {
+        OUTER:
+        for (int i = 1; i < players.size(); i++) {
             Scanner in = new Scanner(System.in);
             if (key.equals("q")) {
                 break;
@@ -354,6 +361,7 @@ public class NewGame {
         printInfoPlayers();
         printInfoCardPool();
         printInfoDealer(round);
+        System.out.println();
     }
 
     public void wonGame() {
@@ -367,8 +375,12 @@ public class NewGame {
         }
         System.out.println();
         System.out.println("Winner is : " + players.get(player).getName());
+        if (player != 1) {
+            players.get(player).topUp(beats.get(player) * 2);
+        }
     }
-    public void newRound(){
+
+    public void newRound() {
         for (int i = 0; i < players.size(); i++) {
             players.get(i).reset();
 
