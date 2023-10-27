@@ -4,7 +4,7 @@ import java.util.Scanner;
 public class NewGame {
     private int amountPlayers = 0;
     private ArrayList<Player> players = new ArrayList<>();
-    private ArrayList<Integer> bet = new ArrayList<>();
+    private ArrayList<Integer> amoundScore = new ArrayList<>();
     String separator = "--------------------------  ";
     Deck deck = new Deck();
     Rules rules;
@@ -141,7 +141,7 @@ public class NewGame {
             }
             printSpace(separator.length());
             player++;
-            if (player > players.size() - 1 && line >= lines - 1) {
+            if (player > players.size() - 1 && line >= lines - 1 || player>players.size()) {
                 break;
             }
 
@@ -247,9 +247,6 @@ public class NewGame {
     }
 
 
-    public void removePlayer(int player) {
-        if (rules.isOver(21, player)) ;
-    }
 
     public void firstDropCard() {
 
@@ -286,7 +283,8 @@ public class NewGame {
 
     public boolean next(int round) {
         String key = "start";
-        System.out.println("Type \"-\" to skip (enouph yor step, \"+\" get one more card");
+        System.out.println();
+        System.out.println("Type \"+\" to get one more card, or \"-\" to scip a turn!");
         OUTER: for (int i = 1; i < players.size(); i++) {
             Scanner in = new Scanner(System.in);
             if (key.equals("q")) {
@@ -330,6 +328,7 @@ public class NewGame {
         }
         while (!rules.isOver(17, 0)) {
             getCard(0);
+            print(2);
             if (rules.isOver(21, 0)) {
                 players.get(0).clearPool();
                 break;
@@ -337,7 +336,7 @@ public class NewGame {
         }
         print(2);
         for (int i = 0; i < players.size(); i++) {
-            bet.add(rules.scoring(i));
+            amoundScore.add(rules.scoring(i));
         }
         return true;
     }
@@ -352,17 +351,16 @@ public class NewGame {
     }
 
     public void wonGame() {
-        System.out.println(bet);
         int player = 0;
         int temp = 0;
-        for (int i = 0; i < bet.size(); i++) {
-            if (bet.get(i) > temp) {
-                temp = bet.get(i);
+        for (int i = 0; i < amoundScore.size(); i++) {
+            if (amoundScore.get(i) > temp) {
+                temp = amoundScore.get(i);
                 player = i;
             }
         }
         System.out.println();
-        System.out.println("Winner is : " + players.get(player));
+        System.out.println("Winner is : " + players.get(player).getName());
     }
 
 

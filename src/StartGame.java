@@ -10,20 +10,22 @@ class Run {
         System.out.println("WELCOME TO THE GAME");
         while (game) {
 
-            System.out.println("Type \"S\" to start game,  \"Q\" to Quite");
+            System.out.println("Type \"s\" to start the  game,  \"q\" to quit");
 //            key = in.nextLine().toLowerCase();
             key = "s";
             switch (key) {
                 case "s" -> {
-                    System.out.println("Type the Amount of Players:");
+                    System.out.println("Type the number of Players:");
 //                    int players = in.nextInt();
-                    int players = 2;
+                    int players = 3;
 //                    newGame = registration(players);
                     newGame = new NewGame(players);
                     newGame.getPlayer(1).setName("Artem");
                     newGame.getPlayer(2).setName("Ivan");
                     newGame.getPlayer(1).setBalance(42);
                     newGame.getPlayer(2).setBalance(45);
+                    newGame.getPlayer(3).setName("John");
+                    newGame.getPlayer(3).setBalance(43);
                     gameInProcess = true;
                     game = false;
                 }
@@ -41,7 +43,7 @@ class Run {
                 System.out.println("--------------------");
             }
         }
-        System.out.print("Type \"d\" to Drop the cards\"q\"  quite: ");
+        System.out.print("Type \"d\" to deal the cards \"q\"  to quit: ");
         while (gameInProcess) {
 //            Scanner scanner = new Scanner(System.in);
 //            key = scanner.nextLine().toLowerCase();
@@ -59,15 +61,13 @@ class Run {
                 }
             }
             newGame.doBets();
+            newGame.print(1);
             gameInProcess = newGame.next(2);
             newGame.wonGame();
             gameInProcess = false;
 
 
         }
-
-        System.out.println(newGame.rules.isBlackJack(1));
-newGame.deck.getDeckView();
     }
 }
 
