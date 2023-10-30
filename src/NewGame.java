@@ -256,9 +256,8 @@ public class NewGame {
                 beats.add(0);
             } else {
                 if (players.get(i).getBalance() > 25) {
-                    Scanner scanner = new Scanner(System.in);
                     System.out.println(players.get(i).getName() + " your bet: ");
-                    int betCof = scanner.nextInt();
+                    int betCof = StartGame.numScanner();
 
                     try {
                         players.get(i).setBet(betCof);

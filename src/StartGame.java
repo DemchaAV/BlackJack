@@ -16,12 +16,7 @@ class Run {
                 case "s" -> {
                     System.out.println("Type the number of Players:");
                     int players = 0;
-                    try {
-                        players = StartGame.numScanner();
-                    } catch (InputMismatchException e) {
-                        System.out.println("Please try again, numbers only! ");
-                        StartGame.numScanner();
-                    }
+                    players = StartGame.numScanner();
                     newGame = StartGame.registration(players);
                     gameInProcess = true;
                     game = false;
@@ -84,24 +79,28 @@ public class StartGame {
             String name = scanner.nextLine();
             newGame.getPlayer(i).setName(name);
             System.out.println("Type your wallet balance ");
-            int wallet = scanner.nextInt();
+            int wallet = numScanner();
             newGame.getPlayer(i).setBalance(wallet);
         }
         return newGame;
     }
 
-    static int numScanner() {
-        Scanner in = new Scanner(System.in);
+    public static int numScanner() {
         int number = 0;
+        boolean validInput = false;
+        Scanner in = new Scanner(System.in);
 
-        try {
-            number = in.nextInt();
-        } catch (InputMismatchException e) {
-            System.out.println("Please try again, numbers only! ");
-            StartGame.numScanner();
+        while (!validInput) {
+            try {
+                number = in.nextInt();
+                validInput = true;
+            } catch (InputMismatchException e) {
+                System.out.println("Please try again, numbers only! ");
+                in.nextLine();
+            }
         }
-        return number;
 
+        return number;
     }
 
 
