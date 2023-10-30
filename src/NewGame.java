@@ -117,38 +117,24 @@ public class NewGame {
 
     public void printInfoCardPool() {
         System.out.println();
-        for (int j = 1; j < amountPlayers; j++) {
+        for (int j = 1; j < players.size(); j++) {
             System.out.print("Cards:");
             printSpace((separator.length()) - 5);
         }
-        System.out.println();
-        int player = 1;
-        int line = 0;
         int lines = largestLength();
         System.out.println();
-        OUTER:
-        while (line < lines || player < players.size() - 1) {
-
-            while (player < players.size() && players.get(player).getPool().size() > line) {
-
-                String tempPrint = showCard(players.get(player).getPool().get(line));
-                System.out.print(tempPrint);
-                printSpace(separator.length() - tempPrint.length());
-                player++;
-                if (player > players.size() - 1) {
-                    player = 1;
-                    line++;
-                    System.out.println();
-                    continue OUTER;
+        for (int i = 0; i < lines; i++) {
+            for (int j = 1; j < players.size(); j++) {
+                if (players.get(j).getPool().size() > i) {
+                    String tempPrint = showCard(players.get(j).getPool().get(i));
+                    System.out.print(tempPrint);
+                    printSpace(separator.length() - tempPrint.length());
+                } else {
+                    printSpace(separator.length());
                 }
 
             }
-            printSpace(separator.length());
-            player++;
-            if (player > players.size() - 1 && line >= lines - 1 || player > players.size() || player == players.size() - 1 && players.get(player).getPool().size() > line) {
-                break;
-            }
-
+            System.out.println();
         }
         System.out.println();
     }
@@ -267,7 +253,7 @@ public class NewGame {
         System.out.println("Type your bet 1 bet equals 25");
         for (int i = 0; i < players.size(); i++) {
             if (i == 0) {
-beats.add(0);
+                beats.add(0);
             } else {
                 if (players.get(i).getBalance() > 25) {
                     Scanner scanner = new Scanner(System.in);
@@ -276,7 +262,7 @@ beats.add(0);
 
                     try {
                         players.get(i).setBet(betCof);
-                        beats.add( betCof * 25);
+                        beats.add(betCof * 25);
                     } catch (outOfMoney e) {
                         System.out.println("Available bet is: 1 -" + players.get(i).getBalance() / 25);
                         i = i - 1;
