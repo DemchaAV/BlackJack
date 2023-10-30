@@ -41,6 +41,23 @@ public class Deck {
             }
         }
     }
+    public  void newShuffle(){
+        ArrayList<Integer> newShuffle = new ArrayList<>();
+        for (int i = 0; i < amountDeck; i++) {
+            int randomNum;
+            boolean check = true;
+            while (check) {
+                randomNum = ((int) (Math.random() * amountDeck + 1));
+                if (randomNum > 0 && !newShuffle.contains(randomNum)) {
+                    newShuffle.add(randomNum);
+                    check = false;
+                }
+
+            }
+        }
+
+        shuffledDeck = newShuffle;
+    }
 
 
     public static void main(String[] args) {

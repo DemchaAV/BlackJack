@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class Rules {
     NewGame game;
 
@@ -21,6 +23,16 @@ public class Rules {
         System.out.println(scoring(player));
         if (scoring(player) == 21 && game.getPlayers().get(player).getPool().size() == 2) return true;
         else return false;
+    }
+    public int whoBlackJack(){
+        int player = 500;
+        if(game.getPlayers()!=null) {
+            for (int i = 1; i < game.getPlayers().size(); i++) {
+                if (scoring(i) == 21 && game.getPlayers().get(i).getPool().size() == 2) return i;
+            }
+        }
+        return player;
+
     }
 
     private int getScore(int card) {
@@ -69,10 +81,10 @@ public class Rules {
     boolean isOver(int over, int player) {
         int score = scoring(player);
         if (over == 17) {
-            if (score >= over) return true;
+            if (score > over) return true;
             else return false;
         } else {
-            if (score > over) return true;
+            if (score >= over) return true;
             else return false;
         }
     }

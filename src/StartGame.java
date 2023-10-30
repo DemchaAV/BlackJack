@@ -49,14 +49,19 @@ class Run {
             }
             newGame.doBets();
             newGame.print(1);
+            if (newGame.rules.whoBlackJack()!=500){
+                gameInProcess = newGame.blackJack();
+            }else{
             gameInProcess = newGame.next(2);
-            newGame.wonGame();
+                System.out.println(newGame.getAmoundScore());
+                newGame.wonGame();}
             gameInProcess = false;
             System.out.println("Type \"c\" to continue the game or \"q\" to quit: ");
             key = scanner.nextLine().toLowerCase();
             switch (key) {
                 case "c" -> {
                     gameInProcess = true;
+                    newGame.deck.newShuffle();
                     newGame.newRound();
                     System.out.print("Type \"d\" to deal the cards \"q\"  to quit: ");
                 }

@@ -19,6 +19,7 @@ public class NewGame {
     NewGame(int amountPlayers) {
         rules = new Rules(this);
         this.amountPlayers = amountPlayers + 1;
+        amoundScore = new ArrayList<>(this.amountPlayers);
         this.players = new ArrayList<>();
         this.beats = new ArrayList<>();
         Player dealer = new Player();
@@ -31,6 +32,9 @@ public class NewGame {
 
     }
 
+    public ArrayList<Integer> getAmoundScore() {
+        return amoundScore;
+    }
 
     public int getAmountPlayers() {
         return amountPlayers;
@@ -333,8 +337,14 @@ public class NewGame {
             }
         }
         print(2);
-        for (int i = 0; i < players.size(); i++) {
-            amoundScore.add(rules.scoring(i));
+        if (amoundScore.size() > 0) {
+            for (int i = 0; i < players.size(); i++) {
+                amoundScore.set(i, rules.scoring(i));
+            }
+        } else {
+            for (int i = 0; i < players.size(); i++) {
+                amoundScore.add(rules.scoring(i));
+            }
         }
         return true;
     }
@@ -353,7 +363,7 @@ public class NewGame {
         int player = 0;
         int temp = 0;
         for (int i = 0; i < amoundScore.size(); i++) {
-            if (amoundScore.get(i) > temp) {
+            if (amoundScore.get(i) > temp && amoundScore.get(i) <= 21) {
                 temp = amoundScore.get(i);
                 player = i;
             }
@@ -365,6 +375,20 @@ public class NewGame {
         }
     }
 
+    public boolean blackJack() {
+        int player = rules.whoBlackJack();
+        if (player != 500) {
+            System.out.println("Winner is : " + players.get(player).getName() + " BlackJack!!!");
+            if (rules.whoBlackJack() != 0) {
+                players.get(player).topUp(beats.get(player) * 2);
+            }
+
+        }
+        return true;
+    }
+public void newShufle(){
+        deck.
+}
     public void newRound() {
         for (int i = 0; i < players.size(); i++) {
             players.get(i).reset();
