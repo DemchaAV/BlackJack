@@ -386,9 +386,7 @@ public class NewGame {
         }
         return true;
     }
-public void newShufle(){
-        deck.
-}
+
     public void newRound() {
         for (int i = 0; i < players.size(); i++) {
             players.get(i).reset();
